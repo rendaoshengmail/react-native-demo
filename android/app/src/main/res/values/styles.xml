@@ -6,4 +6,14 @@
         <item name="android:editTextBackground">@drawable/rn_edit_text_material</item>
     </style>
 
+    <!-- ↓↓↓ 添加下面的启动屏主题 ↓↓↓ -->
+    <style name="Theme.App.Starting" parent="Theme.SplashScreen">
+        <!-- 设置启动屏背景颜色 -->
+        <item name="windowSplashScreenBackground">#FFFFFF</item>
+        <!-- 设置启动屏中间的图标，这里我们使用默认的 ic_launcher -->
+        <item name="windowSplashScreenAnimatedIcon">@mipmap/ic_launcher</item>
+        <!-- 设置启动屏之后App的主题 -->
+        <item name="postSplashScreenTheme">@style/AppTheme</item>
+    </style>
+    <!-- ↑↑↑ 添加上面的启动屏主题 ↑↑↑ -->
 </resources>

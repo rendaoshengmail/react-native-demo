@@ -116,4 +116,12 @@ dependencies {
     } else {
         implementation jscFlavor
     }
+
+    // 添加以下依赖用于网络、JSON和异步处理
+    implementation("com.squareup.okhttp3:okhttp:4.12.0")
+    implementation("com.google.code.gson:gson:2.10.1")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
+
+    implementation("androidx.core:core-splashscreen:1.0.1") // <-- 添加这一行
 }
