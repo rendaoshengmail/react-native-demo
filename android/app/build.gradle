@@ -84,6 +84,15 @@ android {
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
         versionName "1.0"
+
+        // 1. 从命令行读取 'defaultRnVersion' 属性，如果不存在，则使用 '0.0.1' 作为默认值
+        //    你可以在命令行通过 -PdefaultRnVersion="1.0.2" 的方式传入
+        def defaultRnVersion = project.hasProperty('defaultRnVersion') ? project.property('defaultRnVersion') : '0.0.1'
+
+        // 2. 将这个版本号写入到 BuildConfig.java 文件中
+        //    类型为 String，变量名为 DEFAULT_RN_VERSION，值为我们获取到的版本号
+        //    注意：字符串值需要用双引号包裹，因此这里需要转义 \"
+        buildConfigField "String", "DEFAULT_RN_VERSION", "\"${defaultRnVersion}\""
     }
     signingConfigs {
         debug {

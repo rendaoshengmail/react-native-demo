@@ -2,6 +2,7 @@ package com.awesomeproject
 
 import android.app.Activity
 import android.content.Intent
+import android.os.Process
 import android.os.Bundle
 import android.view.View
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
@@ -17,6 +18,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import kotlin.system.exitProcess
 
 class MainActivity : ReactActivity() {
 
@@ -62,8 +64,14 @@ class MainActivity : ReactActivity() {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == UPDATE_REQUEST_CODE) {
             if (resultCode == Activity.RESULT_OK) {
-                // 更新成功，重启Activity以加载新的JSBundle
-                recreate()
+                // 更新成功，需要重启整个应用以加载新的JSBundle
+                val intent = packageManager.getLaunchIntentForPackage(packageName)
+                val componentName = intent!!.component
+                val mainIntent = Intent.makeRestartActivityTask(componentName)
+                startActivity(mainIntent)
+                // 杀掉当前进程
+                Process.killProcess(Process.myPid())
+                exitProcess(0)
             } else {
                 // 更新失败，用户可以选择退出或重试
                 // 为简化，这里直接关闭应用

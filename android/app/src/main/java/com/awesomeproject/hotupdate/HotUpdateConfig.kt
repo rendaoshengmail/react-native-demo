@@ -8,7 +8,7 @@ object HotUpdateConfig {
      * - true: 在Debug模式下，也强制执行热更新逻辑，用于测试。
      * - false: 在Debug模式下，从Metro服务器加载JSBundle，不执行热更新。
      */
-    const val DEBUG_HOT_UPDATE = true // 在这里切换调试模式
+    const val DEBUG_HOT_UPDATE = false // 在这里切换调试模式
 
     /**
      * 是否启用热更新逻辑
@@ -19,8 +19,12 @@ object HotUpdateConfig {
     // App原生版本号，从 aaptOptions 读取
     const val NATIVE_APP_VERSION: String = BuildConfig.VERSION_NAME
 
-    // App内置的默认RN版本号，需要与assets里的bundle包版本一致
-    const val DEFAULT_RN_VERSION = "0.0.1" // 假设初始版本是3.0.0
+    /**
+     * App内置的默认RN版本号，该值从 build.gradle 动态传入。
+     * 需要与 assets 里的 bundle 包版本一致。
+     * 注意：不能再使用 const val，因为 BuildConfig 的值是在编译时生成的，不是编译期常量。
+     */
+    val DEFAULT_RN_VERSION: String = BuildConfig.DEFAULT_RN_VERSION // <-- 2. 从 BuildConfig 读取
 
     // 版本检查接口
     const val VERSION_API_URL = "http://localhost:3000/api/hotupdate"

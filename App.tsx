@@ -6,7 +6,7 @@
  */
 
 import { NewAppScreen } from '@react-native/new-app-screen';
-import { StatusBar, StyleSheet, useColorScheme, View } from 'react-native';
+import { StatusBar, StyleSheet, Text, useColorScheme, View } from 'react-native';
 import {
   SafeAreaProvider,
   useSafeAreaInsets,
@@ -28,8 +28,9 @@ function AppContent() {
 
   return (
     <View style={styles.container}>
+      <Text>metro模式</Text>
       <NewAppScreen
-        templateFileName="App12.tsx"
+        templateFileName="App.tsx"
         safeAreaInsets={safeAreaInsets}
       />
     </View>
