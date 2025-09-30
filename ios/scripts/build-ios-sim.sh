@@ -10,14 +10,15 @@ SCHEME_NAME="AwesomeProject"
 # 模拟器打包通常使用 Debug 配置
 BUILD_CONFIGURATION="Debug" 
 
-# 1.2 输出路径 (相对于 AwesomeProject/ 目录)
-OUTPUT_DIR="../build/simulator" 
+# 1.2 输出路径 (相对于当前执行目录 AwesomeProject/ios/)
+# 结果路径修改为 AwesomeProject/ios/dist/ios-sim-builds
+OUTPUT_DIR="dist/ios-sim-builds" 
 APP_NAME="${SCHEME_NAME}.app"
 
 # 1.3 命令行参数解析
 if [ -z "$1" ]; then
     echo "错误: 必须提供 React Native 版本号作为第一个参数!"
-    echo "用法: ./scripts/build-ios-sim.sh <RN版本号>"
+    echo "用法: ./scripts/build-ios-sim.sh <RN版本号> (请在 AwesomeProject/ios/ 目录下执行)"
     exit 1
 fi
 
@@ -43,8 +44,9 @@ TEMP_BUILD_DIR=$(mktemp -d)
 echo "开始构建 .app 文件..."
 
 # 构造 xcodebuild build 命令
+# 注意: 因为脚本在 ios/ 目录下执行，所以 -workspace 参数不再需要 'ios/' 前缀
 BUILD_COMMAND="xcodebuild build \
-    -workspace ios/${WORKSPACE_NAME}.xcworkspace \
+    -workspace ${WORKSPACE_NAME}.xcworkspace \
     -scheme ${SCHEME_NAME} \
     -configuration ${BUILD_CONFIGURATION} \
     -sdk iphonesimulator \
@@ -81,6 +83,7 @@ cp -R "${APP_SOURCE_PATH}" "${FINAL_APP_PATH}"
 
 # 压缩为 zip 包
 cd "$OUTPUT_DIR"
+# 压缩完成后，路径为 AwesomeProject/ios/dist/ios-sim-builds/AwesomeProject_3.1.0_Simulator.zip
 zip -r "$(basename "$FINAL_ZIP_PATH")" "$(basename "$FINAL_APP_PATH")"
 cd - > /dev/null 
 
@@ -94,5 +97,6 @@ rm -rf "$FINAL_APP_PATH"
 
 echo "==================================================="
 echo "  ✅ iOS 模拟器打包成功!"
-echo "  ZIP 路径 (可分发): ${OUTPUT_DIR}/$(basename "$FINAL_ZIP_PATH")"
+# 最终路径会正确解析为 AwesomeProject/ios/dist/ios-sim-builds/...
+echo "  ZIP 路径 (可分发): $(pwd)/${OUTPUT_DIR}/$(basename "$FINAL_ZIP_PATH")"
 echo "==================================================="
