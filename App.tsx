@@ -28,7 +28,7 @@ function AppContent() {
 
   return (
     <View style={styles.container}>
-      <Text>metro模式</Text>
+      <Text>RN版本0.0.2</Text>
       <NewAppScreen
         templateFileName="App.tsx"
         safeAreaInsets={safeAreaInsets}
